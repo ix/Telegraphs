@@ -12,7 +12,7 @@ import Telegram.Message
 import Telegram.Update
 
 token :: String
-token = "your bot token here"
+token = ""
 
 getBaseURL :: String
 getBaseURL = "https://api.telegram.org/bot" ++ token ++ "/"
@@ -22,3 +22,6 @@ getEndpoint method = getBaseURL ++ method
 
 performGET :: String -> IO B.ByteString
 performGET url = simpleHttp $ url
+
+newUpdateId :: Update -> Int
+newUpdateId up = succ . last . (map update_id) . result $ up

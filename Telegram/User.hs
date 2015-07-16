@@ -6,7 +6,9 @@ import GHC.Generics
 
 data User =
   User { id         :: Integer
-       , first_name :: String }
+       , first_name :: String
+       , last_name  :: Maybe String
+       , username   :: Maybe String }
   deriving (Read, Show, Generic)
 
 instance FromJSON User
