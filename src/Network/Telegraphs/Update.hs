@@ -1,11 +1,11 @@
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE DeriveGeneric #-}
-module Telegram.Update where
+module Network.Telegraphs.Update where
 
 import Data.Aeson
 import GHC.Generics
 
-import Telegram.Message
+import Network.Telegraphs.Message
 
 data TResult =
   TResult { update_id :: Int

@@ -1,10 +1,10 @@
 {-# LANGUAGE DeriveGeneric #-}
-module Telegram.Video where
+module Network.Telegraphs.Video where
 
 import Data.Aeson
 import GHC.Generics
 
-import Telegram.PhotoSize
+import Network.Telegraphs.PhotoSize
 
 data Video =
   Video { file_id   :: String

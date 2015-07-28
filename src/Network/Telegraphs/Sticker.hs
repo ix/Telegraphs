@@ -1,10 +1,10 @@
 {-# LANGUAGE DeriveGeneric #-}
-module Telegram.Sticker where
+module Network.Telegraphs.Sticker where
 
 import Data.Aeson
 import GHC.Generics
 
-import Telegram.PhotoSize
+import Network.Telegraphs.PhotoSize
 
 data Sticker =
   Sticker { file_id   :: String

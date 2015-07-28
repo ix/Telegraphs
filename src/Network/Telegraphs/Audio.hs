@@ -1,5 +1,5 @@
 {-# LANGUAGE DeriveGeneric #-}
-module Telegram.Audio where
+module Network.Telegraphs.Audio where
 
 import Data.Aeson
 import GHC.Generics

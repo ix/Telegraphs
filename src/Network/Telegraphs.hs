@@ -1,6 +1,6 @@
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE DeriveGeneric #-}
-module Telegram where
+module Network.Telegraphs where
 
 import Network.HTTP.Conduit
 import Data.Aeson
@@ -8,17 +8,14 @@ import qualified Data.ByteString.Lazy.Char8 as B
 import GHC.Generics
 import Data.Maybe
 
-import Telegram.Message
-import Telegram.Update
+import Network.Telegraphs.Message
+import Network.Telegraphs.Update
 
-token :: String
-token = ""
+getBaseURL :: String -> String
+getBaseURL token = "https://api.telegram.org/bot" ++ token ++ "/"
 
-getBaseURL :: String
-getBaseURL = "https://api.telegram.org/bot" ++ token ++ "/"
-
-getEndpoint :: String -> String
-getEndpoint method = getBaseURL ++ method
+getEndpoint :: String -> String -> String
+getEndpoint token method = getBaseURL token ++ method
 
 performGET :: String -> IO B.ByteString
 performGET url = simpleHttp $ url

@@ -1,5 +1,5 @@
 {-# LANGUAGE DeriveGeneric #-}
-module Telegram.PhotoSize where
+module Network.Telegraphs.PhotoSize where
 
 import Data.Aeson
 import GHC.Generics

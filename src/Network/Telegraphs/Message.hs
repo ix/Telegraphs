@@ -1,18 +1,18 @@
 {-# LANGUAGE DeriveGeneric #-}
-module Telegram.Message where
+module Network.Telegraphs.Message where
 
 import Data.Aeson
 import GHC.Generics
 
-import Telegram.User
-import Telegram.GroupChat
-import Telegram.Audio
-import Telegram.Document
-import Telegram.PhotoSize
-import Telegram.Sticker
-import Telegram.Video
-import Telegram.Contact
-import Telegram.Location
+import Network.Telegraphs.User
+import Network.Telegraphs.GroupChat
+import Network.Telegraphs.Audio
+import Network.Telegraphs.Document
+import Network.Telegraphs.PhotoSize
+import Network.Telegraphs.Sticker
+import Network.Telegraphs.Video
+import Network.Telegraphs.Contact
+import Network.Telegraphs.Location
 
 data Message =
   Message { message_id            :: Integer

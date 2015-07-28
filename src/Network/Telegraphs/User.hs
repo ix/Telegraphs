@@ -1,5 +1,5 @@
 {-# LANGUAGE DeriveGeneric #-}
-module Telegram.User where
+module Network.Telegraphs.User where
 
 import Data.Aeson
 import GHC.Generics
