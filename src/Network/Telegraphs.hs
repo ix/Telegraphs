@@ -11,14 +11,17 @@ import Data.Maybe
 import Network.Telegraphs.Message
 import Network.Telegraphs.Update
 
-getBaseURL :: String -> String
-getBaseURL token = "https://api.telegram.org/bot" ++ token ++ "/"
-
 getEndpoint :: String -> String -> String
 getEndpoint token method = getBaseURL token ++ method
+  where
+    getBaseURL :: String -> String
+    getBaseURL token = "https://api.telegram.org/bot" ++ token ++ "/"
 
-performGET :: String -> IO B.ByteString
-performGET url = simpleHttp $ url
+getUpdates :: String -> IO Update
+getUpdates token = maybe emptyUpdate id <$> update
+  where response    = simpleHttp $ getEndpoint token "getUpdates"
+        update      = (decode <$> response) :: IO (Maybe Update)
+        emptyUpdate = (Update True [])
 
 newUpdateId :: Update -> Int
-newUpdateId up = succ . last . (map update_id) . result $ up
+newUpdateId update = succ . last . (map update_id) . result $ update
