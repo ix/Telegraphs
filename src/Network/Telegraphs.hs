@@ -33,14 +33,14 @@ getUpdatesWithOffset :: Int -> String -> IO (Maybe Update)
 getUpdatesWithOffset offset token = do
   req <- parseUrl $ getEndpoint token "getUpdates"
   man <- newManager tlsManagerSettings
-
   -- use the offset in the GET request
   reqOffset <- return req { queryString = B.pack ("?offset=" ++ show offset) }
-
   -- perform the request
   response <- httpLbs reqOffset man
-  
   return $ convertString $ responseBody response
+
+-- Ok let's send a message!
+
 
 -- given an update, calculate a new update ID
 newUpdateId :: Maybe Update -> Int
