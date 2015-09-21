@@ -28,6 +28,14 @@ convertString bs =
    Just x  -> Just x
   where parsed = (decode $ bs) :: Maybe Status
 
+-- getUpdates without an offset
+getUpdates :: String -> IO (Maybe Update)
+getUpdates token = do
+  req <- parseUrl $ getEndpoint token "getUpdates"
+  man <- newManager tlsManagerSettings
+  response <- httpLbs req man
+  return $ convertString $ responseBody response
+
 -- perform the 'getUpdates' method with an offset
 getUpdatesWithOffset :: Int -> String -> IO (Maybe Update)
 getUpdatesWithOffset offset token = do
@@ -39,12 +47,18 @@ getUpdatesWithOffset offset token = do
   response <- httpLbs reqOffset man
   return $ convertString $ responseBody response
 
--- Ok let's send a message!
-
+-- send a given message to a chat
+sendMessage :: String -> Int -> String -> IO (Response LB.ByteString)
+sendMessage msg chat token = do
+  req <- parseUrl $ getEndpoint token "sendMessage"
+  man <- newManager tlsManagerSettings
+  let query = "?text=" ++ msg ++ "&chat_id=" ++ show chat
+  reqText <- return req { method = "POST"
+                        , queryString = B.pack query }
+  -- perform the request
+  httpLbs reqText man
 
 -- given an update, calculate a new update ID
-newUpdateId :: Maybe Update -> Int
+newUpdateId :: Update -> Int
 newUpdateId update =
-  case update of
-   Nothing -> 0
-   (Just n) -> succ . last . (map update_id) $ n
+  succ . last . (map update_id) $ update

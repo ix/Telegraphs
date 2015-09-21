@@ -16,5 +16,5 @@ cabal.sandbox.config
 *.hp
 *~
 \#*#
-telegram.key
+example/telegram.key
 .stack-work
