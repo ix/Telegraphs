@@ -11,6 +11,7 @@ import Network.Telegraphs.Document
 import Network.Telegraphs.PhotoSize
 import Network.Telegraphs.Sticker
 import Network.Telegraphs.Video
+import Network.Telegraphs.Voice
 import Network.Telegraphs.Contact
 import Network.Telegraphs.Location
 
@@ -18,7 +19,7 @@ data Message =
   Message { message_id            :: Integer
           , from                  :: User
           , date                  :: Integer
-          , chat                  :: GroupChat
+          , chat                  :: Either GroupChat User
           , forward_from          :: Maybe User
           , forward_date          :: Maybe Integer
           , reply_to_message      :: Maybe Message
@@ -28,6 +29,8 @@ data Message =
           , photo                 :: Maybe [PhotoSize]
           , sticker               :: Maybe Sticker
           , video                 :: Maybe Video
+          , voice                 :: Maybe Voice
+          , caption               :: Maybe String
           , contact               :: Maybe Contact
           , location              :: Maybe Location
           , new_chat_participant  :: Maybe User

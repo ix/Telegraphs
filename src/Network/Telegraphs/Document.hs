@@ -8,7 +8,7 @@ import Network.Telegraphs.PhotoSize
 
 data Document =
   Document { file_id   :: String
-           , thumb     :: PhotoSize
+           , thumb     :: Maybe PhotoSize
            , file_name :: Maybe String
            , mime_type :: Maybe String
            , file_size :: Maybe Integer }

@@ -11,7 +11,7 @@ data Video =
         , width     :: Integer
         , height    :: Integer
         , duration  :: Integer
-        , thumb     :: PhotoSize
+        , thumb     :: Maybe PhotoSize
         , mime_type :: Maybe String
         , file_size :: Maybe Integer
         , caption   :: Maybe String }

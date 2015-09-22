@@ -7,23 +7,20 @@ import Text.Printf
 token :: String
 token = "token"
 
-group :: Int
-group = -1
-
 mainLoop :: Int -> IO ()
 mainLoop id = do
-  update <- getUpdatesWithOffset id token
-  case update of
-    Nothing -> do
-      printf "[]\n"
-      mainLoop id
-    Just u  -> do
-      print update
-      mainLoop $ newUpdateId u
-  
+  newUpdate <- getUpdatesWithOffset id token
+  case newUpdate of
+    Nothing -> printf "Empty update.\n" >> mainLoop id
+    Just x  -> do
+      print x
+      mainLoop $ newUpdateId x
+
 main :: IO ()
 main = do
-  initial <- getUpdatesWithOffset 0 token
+  initial <- getUpdates token
   case initial of
-    Nothing -> printf "[Trying for initial...]\n" >> main
-    Just u  -> mainLoop $ newUpdateId u
+    Nothing -> printf "Empty update.\n"
+    Just x  -> do
+      printf "Passing %v to mainLoop...\n" $ newUpdateId x
+      mainLoop $ newUpdateId x

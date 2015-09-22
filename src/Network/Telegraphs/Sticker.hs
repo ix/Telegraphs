@@ -10,7 +10,7 @@ data Sticker =
   Sticker { file_id   :: String
           , width     :: Integer
           , height    :: Integer
-          , thumb     :: PhotoSize
+          , thumb     :: Maybe PhotoSize
           , file_size :: Maybe Integer }
   deriving (Read, Show, Generic)
 
