@@ -8,6 +8,7 @@ import qualified Data.ByteString.Char8 as B
 import qualified Data.ByteString.Lazy.Char8 as LB
 import GHC.Generics
 import Data.Maybe
+import Data.Functor
 
 import Network.Telegraphs.Message
 import Network.Telegraphs.Update
@@ -20,7 +21,7 @@ getEndpoint token method = getBaseURL token ++ method
     getBaseURL token = "https://api.telegram.org/bot" ++ token ++ "/"
 
 -- convert the body returned from a GET request to an update
-convertString :: LB.ByteString -> Maybe Update
+convertString :: LB.ByteString -> Maybe [Update]
 convertString bs =
   case result <$> parsed of
    Just [] -> Nothing
@@ -28,8 +29,15 @@ convertString bs =
    Just x  -> Just x
   where parsed = (decode $ bs) :: Maybe Status
 
+debugString :: String -> IO (Either String [Update])
+debugString token = do
+  req <- parseUrl $ getEndpoint token "getUpdates"
+  man <- newManager tlsManagerSettings
+  response <- httpLbs req man
+  return $ eitherDecode $ responseBody response
+
 -- getUpdates without an offset
-getUpdates :: String -> IO (Maybe Update)
+getUpdates :: String -> IO (Maybe [Update])
 getUpdates token = do
   req <- parseUrl $ getEndpoint token "getUpdates"
   man <- newManager tlsManagerSettings
@@ -37,7 +45,7 @@ getUpdates token = do
   return $ convertString $ responseBody response
 
 -- perform the 'getUpdates' method with an offset
-getUpdatesWithOffset :: Int -> String -> IO (Maybe Update)
+getUpdatesWithOffset :: Int -> String -> IO (Maybe [Update])
 getUpdatesWithOffset offset token = do
   req <- parseUrl $ getEndpoint token "getUpdates"
   man <- newManager tlsManagerSettings
@@ -59,6 +67,6 @@ sendMessage msg chat token = do
   httpLbs reqText man
 
 -- given an update, calculate a new update ID
-newUpdateId :: Update -> Int
+newUpdateId :: [Update] -> Int
 newUpdateId update =
   succ . last . (map update_id) $ update

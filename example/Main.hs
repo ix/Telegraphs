@@ -5,7 +5,7 @@ import System.Posix.Unistd
 import Text.Printf
 
 token :: String
-token = "token"
+token = "130996555:AAF8v8xO-CLulyjiJhZv4B49PeYmSGrVKlE"
 
 mainLoop :: Int -> IO ()
 mainLoop id = do
@@ -20,7 +20,7 @@ main :: IO ()
 main = do
   initial <- getUpdates token
   case initial of
-    Nothing -> printf "Empty update.\n"
+    Nothing -> printf "Empty initial update.\n"
     Just x  -> do
       printf "Passing %v to mainLoop...\n" $ newUpdateId x
       mainLoop $ newUpdateId x

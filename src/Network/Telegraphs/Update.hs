@@ -7,20 +7,18 @@ import GHC.Generics
 
 import Network.Telegraphs.Message
 
-data TResult =
-  TResult { update_id :: Int
-          , message   :: Message }
+data Update =
+  Update { update_id :: Int
+         , message   :: Maybe Message }
   deriving (Read, Show, Generic)
-
-type Update = [TResult]
            
 data Status =
   Status { ok     :: Bool
-         , result :: Update }
+         , result :: [Update] }
   deriving (Read, Show, Generic)
 
-instance FromJSON TResult
-instance ToJSON TResult
+instance FromJSON Update 
+instance ToJSON Update
 
 instance FromJSON Status
 instance ToJSON Status

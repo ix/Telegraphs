@@ -5,7 +5,7 @@ import Data.Aeson
 import GHC.Generics
 
 import Network.Telegraphs.User
-import Network.Telegraphs.GroupChat
+import Network.Telegraphs.Chat
 import Network.Telegraphs.Audio
 import Network.Telegraphs.Document
 import Network.Telegraphs.PhotoSize
@@ -17,9 +17,9 @@ import Network.Telegraphs.Location
 
 data Message =
   Message { message_id            :: Integer
-          , from                  :: User
+          , from                  :: Maybe User
           , date                  :: Integer
-          , chat                  :: Either GroupChat User
+          , chat                  :: Chat
           , forward_from          :: Maybe User
           , forward_date          :: Maybe Integer
           , reply_to_message      :: Maybe Message
